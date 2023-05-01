@@ -41,7 +41,7 @@ const saveAs = (uri, filename) => {
         link.click();
         document.body.removeChild(link);
     } else {
-        window.open(uri);
+        window && window.open(uri);
     }
 };
 
@@ -76,8 +76,9 @@ const exportComponent = (node, {
     }
 
     const element = ReactDOM.findDOMNode(node.current);
+    const scrollY = typeof window !== 'undefined' ?  -window.scrollY : 0
     return html2canvas(element, {
-        scrollY: -window.scrollY,
+        scrollY,
         useCORS: true,
         ...html2CanvasOptions
     }).then(canvas => {
